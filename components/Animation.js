@@ -1,8 +1,8 @@
 import { Animated } from "react-native";
 
-export const createAnimation = (value, duration, easing, delay = 0, useNativeDriver = true) => {
-    return Animated.timing(value, {
-      toValue: 1,
+export const createAnimation = (animation, toValue, duration, easing, delay = 0, useNativeDriver = true) => {
+    return Animated.timing(animation, {
+      toValue,
       duration,
       easing,
       delay,
@@ -10,10 +10,10 @@ export const createAnimation = (value, duration, easing, delay = 0, useNativeDri
     });
 };
 
-export const createInterpolate = (animation, outX, outY) => {
+export const createInterpolate = (animation, input, output) => {
     return animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [outX, outY]
+        inputRange: input,
+        outputRange: output
     })
 };  
     

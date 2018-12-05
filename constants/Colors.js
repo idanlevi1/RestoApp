@@ -21,17 +21,17 @@ export const QED_Group = {
   four: '#dddfd4',
 }
 
-export const BRANDTS = {
+export const Flamingo = {
   one: '#252839',
   two: '#f2b632',
   three: '#677077',
   four: '#b5b5b7',
 }
 
-export const Flamingo = {
+export const Flamingo1 = {
   one: '#334431',
-  two: '#e05038',
-  three: '#e6af4b',
+  two: '#e6af4b',
+  three: '#e05038',
   four: '#f2cbbc',
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Splash from '../screens/SplashScreen/Splash';
-import Signup from '../screens/SignupScreen/Signup';
+import SignupNav from '../navigation/SignupNavigator';
 
 export default class MainApp extends React.Component {
   state = {
@@ -10,7 +10,7 @@ export default class MainApp extends React.Component {
   componentDidMount() {
     setTimeout(() => {
     this.setState({splash:false})      
-    }, 2500);
+    }, 500);
   };
   
   render() {
@@ -18,7 +18,7 @@ export default class MainApp extends React.Component {
       this.state.splash ? 
       <Splash/>
       :
-      <Signup/>
+      <SignupNav/>
     );
   }
 }
