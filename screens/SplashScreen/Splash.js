@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Animated, Easing } from "react-native";
 import {createAnimation, createInterpolate} from '../../components/Animation'
-import { Flamingo } from "../../constants/Colors";
+import { QED_Group } from "../../constants/Colors";
 import { MonoText } from "../../components/StyledText";
 import { company } from "../../assets/data/company";
 
@@ -48,17 +48,17 @@ export default class Splash extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Flamingo.two,
+    backgroundColor: QED_Group.two,
     justifyContent: "center",
     alignItems: "center"
   },
   title: {
     fontSize: 52,
-    color: Flamingo.three,
+    color: QED_Group.three,
     fontWeight: "500"
   },
   subtitle: {
     fontSize: 26,
-    color: Flamingo.one
+    color: QED_Group.one
   }
 });

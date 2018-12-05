@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import AppNavigator from "../../navigation/AppNavigator";
-import { Flamingo } from "../constants/Colors";
+import { QED_Group } from "../constants/Colors";
 
 export default class MainAppNavigator extends React.Component {
   render() {
@@ -17,6 +17,6 @@ export default class MainAppNavigator extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Flamingo.one
+    backgroundColor: QED_Group.one
   }
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, FlatList, KeyboardAvoidingView, Animated, Easing } from "react-native";
-import { Flamingo } from "../../constants/Colors";
+import { QED_Group } from "../../constants/Colors";
 import {MonoText} from '../../components/StyledText'
 import windowSize from '../../constants/Layout';
 import {TextInputMono} from '../../components/StyledTextInput';
@@ -8,7 +8,7 @@ import { ButtonMono } from '../../components/StyledButton';
 import Level from '../../models/Level';
 import {createAnimation, createInterpolate} from '../../components/Animation';
 
-const colors = Object.values(Flamingo);
+const colors = Object.values(QED_Group);
 
 export default class Signup extends React.Component {
     constructor(props) {

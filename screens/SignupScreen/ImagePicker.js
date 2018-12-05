@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { Flamingo } from "../../constants/Colors";
+import { QED_Group } from "../../constants/Colors";
 import {MonoText} from '../../components/StyledText'
 import windowSize from '../../constants/Layout';
 import { ButtonMono } from '../../components/StyledButton';
@@ -29,11 +29,11 @@ export default class ImagePickerScreen extends React.Component {
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <MonoText style={[styles.title,{
-                    color: Flamingo.four,
-                    borderLeftColor: Flamingo.two}]}>Take a Picture!</MonoText>
+                    color: QED_Group.four,
+                    borderLeftColor: QED_Group.two}]}>Take a Picture!</MonoText>
                 <MonoText style={[styles.subtitle,{
-                    color: Flamingo.three,
-                    borderLeftColor: Flamingo.two,
+                    color: QED_Group.three,
+                    borderLeftColor: QED_Group.two,
                 }]}>If You Want...</MonoText>
             </View>
             <React.Fragment>
@@ -41,32 +41,32 @@ export default class ImagePickerScreen extends React.Component {
                     {avatarUrl ?
                     <React.Fragment>
                         <MonoText style={[styles.subtitle,{
-                            color: Flamingo.two,
-                            borderLeftColor: Flamingo.four
+                            color: QED_Group.two,
+                            borderLeftColor: QED_Group.four
                         }]}>Hello {this.state.userDetails.name}!</MonoText>
                         <Image 
                         source={{uri:avatarUrl}} 
                         style={[styles.avatar,{
-                            backgroundColor: Flamingo.two,
-                            borderColor: Flamingo.four
+                            backgroundColor: QED_Group.two,
+                            borderColor: QED_Group.four
                         }]}/> 
                      </React.Fragment>
                      : 
-                     <MonoText style={{color:Flamingo.four}}>Loading...</MonoText>
+                     <MonoText style={{color:QED_Group.four}}>Loading...</MonoText>
                     }
                 </View>
                 <View style={styles.navigationContainer}>
                     <ButtonMono 
-                    _backgroundColor={Flamingo.two} 
-                    _color={Flamingo.one}
+                    _backgroundColor={QED_Group.two} 
+                    _color={QED_Group.one}
                     _fontSize={28} 
                     _text={'⇦'}
                     _padding={5}
                     onClick={this.onBackClick}
                     />
                     <ButtonMono 
-                    _backgroundColor={Flamingo.two} 
-                    _color={Flamingo.one}
+                    _backgroundColor={QED_Group.two} 
+                    _color={QED_Group.one}
                     _fontSize={20} 
                     _text={'Next'}
                     _padding={10}
@@ -82,7 +82,7 @@ export default class ImagePickerScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Flamingo.one
+        backgroundColor: QED_Group.one
     },
     headerContainer:{
         flex: 1,
