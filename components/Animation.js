@@ -15,5 +15,14 @@ export const createInterpolate = (animation, input, output) => {
         inputRange: input,
         outputRange: output
     })
-};  
-    
+};
+
+export const createSpringAnim = (animation, toValue, duration, easeing, delay = 0, useNativeDriver = true ) => {
+    return Animated.spring(animation,{
+        toValue,
+        duration,
+        easeing,
+        delay,
+        useNativeDriver,
+      })
+}

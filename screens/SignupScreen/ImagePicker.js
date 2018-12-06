@@ -1,40 +1,57 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Animated, Easing } from "react-native";
 import { QED_Group } from "../../constants/Colors";
 import {MonoText} from '../../components/StyledText'
 import windowSize from '../../constants/Layout';
 import { ButtonMono } from '../../components/StyledButton';
+import {createAnimation, createInterpolate, createSpringAnim} from '../../components/Animation';
 
 const adorableAvatarsAPI = 'https://api.adorable.io/avatars/'
 
-export default class ImagePickerScreen extends React.Component {
+export default class ImagePicker extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             avatarUrl: null,
-            userDetails: null
+            userDetails: null,
         }
+
+        this.opacityAnim = new Animated.Value(0);
+        this.springAnim = new Animated.Value(4);
+        this.colorAnim = new Animated.Value(0);
+        this.colorValue = createInterpolate(this.colorAnim, [0, 300], [QED_Group.two, QED_Group.one]);
+        this.playAnimations()
       }
     
     componentDidMount() {
-        const avatarSize = 200
-        const userDetails = this.props.navigation.state.params.userDetails
-        const avatarUrl = adorableAvatarsAPI + avatarSize + userDetails.email + '.png'
-        this.setState({ avatarUrl, userDetails })
+        const avatarSize = 200;
+        const userDetails = this.props.navigation.state.params.userDetails;
+        const avatarUrl = adorableAvatarsAPI + avatarSize + userDetails.phone + ".png";
+        this.setState({ avatarUrl, userDetails });
+    }
+
+    playAnimations = () => {
+        Animated.parallel([
+            createAnimation(this.opacityAnim, 1, 1000, Easing.bounce, 1000),
+            createSpringAnim(this.springAnim, 1, 1000, Easing.ease),
+            createAnimation(this.colorAnim, 300, 1000, Easing.linear, 200, false),
+        ]).start()
     }
 
     render() {
         const {avatarUrl} = this.state;
         return (
-        <View style={styles.container}>
+        <Animated.View style={[styles.container,{backgroundColor: this.colorValue}]}>
             <View style={styles.headerContainer}>
                 <MonoText style={[styles.title,{
                     color: QED_Group.four,
                     borderLeftColor: QED_Group.two}]}>Take a Picture!</MonoText>
-                <MonoText style={[styles.subtitle,{
-                    color: QED_Group.three,
-                    borderLeftColor: QED_Group.two,
-                }]}>If You Want...</MonoText>
+                <Animated.View style={{opacity: this.opacityAnim}}>
+                    <MonoText style={[styles.subtitle,{
+                        color: QED_Group.three,
+                        borderLeftColor: QED_Group.two,
+                    }]}>If You Want...</MonoText>
+                </Animated.View>
             </View>
             <React.Fragment>
                 <View style={styles.avatarContainer}>
@@ -44,11 +61,12 @@ export default class ImagePickerScreen extends React.Component {
                             color: QED_Group.two,
                             borderLeftColor: QED_Group.four
                         }]}>Hello {this.state.userDetails.name}!</MonoText>
-                        <Image 
+                        <Animated.Image
                         source={{uri:avatarUrl}} 
                         style={[styles.avatar,{
                             backgroundColor: QED_Group.two,
-                            borderColor: QED_Group.four
+                            borderColor: QED_Group.four,
+                            transform: [{ scale: this.springAnim}]
                         }]}/> 
                      </React.Fragment>
                      : 
@@ -62,7 +80,7 @@ export default class ImagePickerScreen extends React.Component {
                     _fontSize={28} 
                     _text={'⇦'}
                     _padding={5}
-                    onClick={this.onBackClick}
+                    onClick={()=>this.props.navigation.goBack()}
                     />
                     <ButtonMono 
                     _backgroundColor={QED_Group.two} 
@@ -74,7 +92,7 @@ export default class ImagePickerScreen extends React.Component {
                     />
                 </View>
             </React.Fragment>
-        </View>
+        </Animated.View>
         );
     }
 }

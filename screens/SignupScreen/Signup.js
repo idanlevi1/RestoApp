@@ -6,7 +6,7 @@ import windowSize from '../../constants/Layout';
 import {TextInputMono} from '../../components/StyledTextInput';
 import { ButtonMono } from '../../components/StyledButton';
 import Level from '../../models/Level';
-import {createAnimation, createInterpolate} from '../../components/Animation';
+import {createAnimation, createInterpolate, createSpringAnim} from '../../components/Animation';
 
 const colors = Object.values(QED_Group);
 
@@ -30,15 +30,20 @@ export default class Signup extends React.Component {
     }
     
     componentDidMount() {
+        const levels = this.makeLevelsArray()
+        const currentLevel = levels[0];
+        this.questionAnimationComeFromUp();
+        createAnimation(this.xLevelsAnim, 0, 1000, Easing.linear, 0, false).start();
+        this.setState({ levels, currentLevel })
+    }
+
+    makeLevelsArray = () => {
         const levels = [] 
         levels.push(new Level(1, true, 'name', 'default', 'Your Name?', 17, 'Perfect!'));
         levels.push(new Level(2, false, 'phone', 'phone-pad', 'Phone Number?', 12, 'The Phone Number Is Good!'));
         levels.push(new Level(3, false, 'email', 'email-address', 'Email?', 28, 'Great!'));
         levels.push(new Level(4, false, 'password', 'default', 'Password...', 8, 'Complete!!'));
-        const currentLevel = levels[0];
-        this.questionAnimationComeFromUp();
-        createAnimation(this.xLevelsAnim, 0, 1000, Easing.linear, 0, false).start();
-        this.setState({ levels, currentLevel })
+        return levels;
     }
 
     getColor = (i) => { return colors[(this.COLOR_N + (i)) % 4]; }
@@ -62,6 +67,7 @@ export default class Signup extends React.Component {
           const userDetails = { name, phone, email, password };
           this.titleSpringAnimation(100);
           this.props.navigation.navigate("ImagePicker", { userDetails });
+          this.titleSpringAnimation(currentLevel.number, 100);
         }
     }
 
@@ -98,13 +104,9 @@ export default class Signup extends React.Component {
         })
     }
 
-    titleSpringAnimation = (i) => {
-        Animated.spring(this.springAnim,{
-            toValue: 0.9 + (i*5/100),
-            duration: 1000,
-            easeing: Easing.ease,
-          }).start();
-      }
+    titleSpringAnimation = (i, delay = 0) => {
+        createSpringAnim(this.springAnim, 0.9 + (i * 5 / 100), 1000, Easing.ease, delay).start();
+    }
 
 
 
