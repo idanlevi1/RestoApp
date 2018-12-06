@@ -10,7 +10,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "https://api.adorable.io/avatars/120/idan.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
