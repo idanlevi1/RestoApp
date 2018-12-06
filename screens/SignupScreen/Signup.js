@@ -35,6 +35,9 @@ export default class Signup extends React.Component {
         this.questionAnimationComeFromUp();
         createAnimation(this.xLevelsAnim, 0, 1000, Easing.linear, 0, false).start();
         this.setState({ levels, currentLevel })
+        //REMOVE (FOR TEST)
+        // this.props.navigation.navigate("ImagePicker", { userDetails: {name: 'Idan Levi', phone: '054'} });
+
     }
 
     makeLevelsArray = () => {
@@ -62,7 +65,6 @@ export default class Signup extends React.Component {
             this.questionAnimationComeFromUp();
           }, 400);
         } else {
-          //TODO: DISPATCH TO REDUX AND DB
           const { name, phone, email, password } = this.state;
           const userDetails = { name, phone, email, password };
           this.titleSpringAnimation(100);
