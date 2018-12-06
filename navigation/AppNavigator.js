@@ -1,10 +1,11 @@
-import React from 'react';
 import { createSwitchNavigator } from 'react-navigation';
+import SignupRoute from './SignupNavigator';
+import HomeRoute from './HomeNavigator';
 
-import MainTabNavigator from './MainTabNavigator';
-
-export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
+export const createRootNavigator = (signedIn = false) => createSwitchNavigator({
+  Home: HomeRoute,
+  Signup: SignupRoute,
+},
+{
+  initialRouteName: signedIn ? "Home" : "Signup"
 });

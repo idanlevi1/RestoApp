@@ -1,25 +1,24 @@
 import React from "react";
-import Splash from '../screens/SplashScreen/Splash';
-import SignupNav from '../navigation/SignupNavigator';
+import Splash from "../screens/SplashScreen/Splash";
+import {createRootNavigator} from '../navigation/AppNavigator'
 
 export default class MainApp extends React.Component {
   state = {
-    splash: true
-  }
-  
+    splash: true,
+    signedIn: false
+  };
+
   componentDidMount() {
     setTimeout(() => {
-    this.setState({splash:false})      
+      this.setState({ splash: false });
     }, 2500);
-  };
-  
+  }
+
   render() {
-    return (
-      this.state.splash ? 
-      <Splash/>
-      :
-      <SignupNav/>
-    );
+    if (this.state.splash) {
+      return <Splash />;
+    }
+    const Layout = createRootNavigator(this.state.signedIn)
+    return <Layout />;
   }
 }
-
