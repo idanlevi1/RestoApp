@@ -40,9 +40,6 @@ export default class Signup extends React.Component {
         const levels = this.makeLevelsArray()
         const currentLevel = levels[0];
         this.setState({ levels, currentLevel })
-        //REMOVE (FOR TEST)
-        // this.props.navigation.navigate("ImagePicker", { userDetails: {name: 'Idan Levi', phone: '054'} });
-
     }
 
     makeLevelsArray = () => {
@@ -90,7 +87,7 @@ export default class Signup extends React.Component {
                 validation = validateByLength(value, 2)
                 break;
             case PHONE:
-                validation = isNumbers(value)
+                validation = validateByLength(value, 2) && isNumbers(value)
                 break;
             case EMAIL:
                 validation = validateEmail(value)
