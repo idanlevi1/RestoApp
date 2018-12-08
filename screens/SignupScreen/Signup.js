@@ -7,7 +7,12 @@ import {TextInputMono} from '../../components/StyledTextInput';
 import { ButtonMono } from '../../components/StyledButton';
 import Level from '../../models/Level';
 import {createAnimation, createInterpolate, createSpringAnim} from '../../components/Animation';
-
+import Toast from 'react-native-simple-toast';
+import { validateByLength, isNumbers, validateEmail } from '../../utils/stringUtils'
+const NAME = 'name';
+const PHONE = 'phone';
+const EMAIL = 'email';
+const PASSWORD = 'password';
 const colors = Object.values(QED_Group);
 
 export default class Signup extends React.Component {
@@ -15,9 +20,9 @@ export default class Signup extends React.Component {
         super(props);
         this.state = {
             name: '',
-            phone: null,
+            phone: '',
             email: '',
-            password: null,
+            password: '',
             currentLevel: null,
             levels: null,
         }
@@ -30,10 +35,10 @@ export default class Signup extends React.Component {
     }
     
     componentDidMount() {
-        const levels = this.makeLevelsArray()
-        const currentLevel = levels[0];
         this.questionAnimationComeFromUp();
         createAnimation(this.xLevelsAnim, 0, 1000, Easing.linear, 0, false).start();
+        const levels = this.makeLevelsArray()
+        const currentLevel = levels[0];
         this.setState({ levels, currentLevel })
         //REMOVE (FOR TEST)
         // this.props.navigation.navigate("ImagePicker", { userDetails: {name: 'Idan Levi', phone: '054'} });
@@ -42,10 +47,10 @@ export default class Signup extends React.Component {
 
     makeLevelsArray = () => {
         const levels = [] 
-        levels.push(new Level(1, true, 'name', 'default', 'Your Name?', 17, 'Perfect!'));
-        levels.push(new Level(2, false, 'phone', 'phone-pad', 'Phone Number?', 12, 'The Phone Number Is Good!'));
-        levels.push(new Level(3, false, 'email', 'email-address', 'Email?', 28, 'Great!'));
-        levels.push(new Level(4, false, 'password', 'default', 'Password...', 8, 'Complete!!'));
+        levels.push(new Level(1, true, NAME, 'default', 'Your Name?', 17, 'Perfect!'));
+        levels.push(new Level(2, false, PHONE, 'phone-pad', 'Phone Number?', 12, 'The Phone Number Is Good!'));
+        levels.push(new Level(3, false, EMAIL, 'email-address', 'Email?', 28, 'Great!'));
+        levels.push(new Level(4, false, PASSWORD, 'default', 'Password...', 8, 'Complete!!'));
         return levels;
     }
 
@@ -54,23 +59,70 @@ export default class Signup extends React.Component {
     onNextClick = () => {
         const { currentLevel, levels } = this.state;
         currentLevel.result = this.state[currentLevel.attribute];
-        if (currentLevel.number < levels.length) {
-          this.questionAnimationFallDown().start()
-          setTimeout(() => {
-            this.titleSpringAnimation(currentLevel.number);
-            const nextLevel = levels[currentLevel.number];
-            nextLevel.status = true;
-            this.COLOR_N = nextLevel.number;
-            this.setState({ currentLevel: nextLevel });
-            this.questionAnimationComeFromUp();
-          }, 400);
-        } else {
-          const { name, phone, email, password } = this.state;
-          const userDetails = { name, phone, email, password };
-          this.titleSpringAnimation(100);
-          this.props.navigation.navigate("ImagePicker", { userDetails });
-          this.titleSpringAnimation(currentLevel.number, 100);
+        if(this.validateInput(currentLevel.attribute, currentLevel.result)){
+            if (currentLevel.number < levels.length) {
+                this.questionAnimationFallDown().start()
+                setTimeout(() => {
+                    this.titleSpringAnimation(currentLevel.number);
+                    const nextLevel = levels[currentLevel.number];
+                    nextLevel.status = true;
+                    this.COLOR_N = nextLevel.number;
+                    this.setState({ currentLevel: nextLevel });
+                    this.questionAnimationComeFromUp();
+            }, 400);
+            } else {
+            const { name, phone, email, password } = this.state;
+            const userDetails = { name, phone, email, password };
+            this.titleSpringAnimation(100);
+            this.props.navigation.navigate("ImagePicker", { userDetails });
+            this.titleSpringAnimation(currentLevel.number, 100);
+            }
         }
+        else{
+            this.showInvalidInputMessage(currentLevel.attribute)
+        }
+    }
+
+    validateInput = (attribute, value) => {
+        let validation = true;
+        switch (attribute) {
+            case NAME:
+                validation = validateByLength(value, 2)
+                break;
+            case PHONE:
+                validation = isNumbers(value)
+                break;
+            case EMAIL:
+                validation = validateEmail(value)
+                break;
+            case PASSWORD:
+                validation = validateByLength(value, 6)
+                break;
+            default:
+                break;
+        }
+        return validation
+    }
+
+    showInvalidInputMessage = (inputType) => {
+        let msg = ''
+        switch (inputType) {
+            case NAME:
+                msg = 'Your name is too short (at least 2 characters)';
+                break;
+            case PHONE:
+                msg = 'An invalid phone number was entered';
+                break;
+            case EMAIL:
+                msg = 'The email address you supplied is invalid';
+                break;
+            case PASSWORD:
+                msg = 'Your password is too short (at least 6 characters)';
+                break;
+            default:
+                break;
+        }
+        Toast.show(msg, Toast.SHORT,Toast.BOTTOM)
     }
 
     onBackClick = () =>{
@@ -138,11 +190,11 @@ export default class Signup extends React.Component {
                         style={[styles.input,{
                             borderBottomColor: this.getColor(3),
                             color: this.getColor(4)},
-                            currentLevel.attribute === 'email' && {fontSize: 15}
+                            currentLevel.attribute === EMAIL && {fontSize: 15}
                             ]}
                         maxLength={currentLevel.maxLength}
                         keyboardType={currentLevel.type}
-                        secureTextEntry={currentLevel.attribute === 'password' && true}
+                        secureTextEntry={currentLevel.attribute === PASSWORD}
                         onFocus={()=>console.log('focus')}
                         onEndEditing={()=>console.log('end')}
                         />

@@ -5,7 +5,7 @@ import {MonoText} from '../../components/StyledText'
 import windowSize from '../../constants/Layout';
 import { ButtonMono } from '../../components/StyledButton';
 import {createAnimation, createInterpolate, createSpringAnim} from '../../components/Animation';
-import {handleSignupReq} from './signupService'
+import {handleSignupReq} from './SignupService'
 import { connect } from 'react-redux';
 import { signup } from '../../store/modules/user/userActions'
 
