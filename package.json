@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "babel-preset-react-native": "^2.1.0",
     "expo": "^31.0.2",
     "expo-cli": "^2.6.5",
     "react": "16.5.0",

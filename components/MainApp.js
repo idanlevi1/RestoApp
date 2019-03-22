@@ -3,7 +3,7 @@ import Splash from "../screens/SplashScreen/Splash";
 import {createRootNavigator} from '../navigation/AppNavigator';
 import { AsyncStorage } from "react-native"
 import { connect } from 'react-redux';
-import { login } from '../../store/modules/user/userActions';
+import { login } from '../store/modules/user/userActions';
 
 class MainApp extends React.Component {
   state = {
