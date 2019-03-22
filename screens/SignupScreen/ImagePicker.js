@@ -159,7 +159,7 @@ class ImagePicker extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user //We don't user 'user' for now, we can return {} if we want 
+        user: state.user //We don't need 'user' for now, we can return {} if we want 
     }
 }
 
