@@ -12,8 +12,8 @@ class MainApp extends React.Component {
   };
 
   async componentDidMount() {
+    // await AsyncStorage.removeItem('@MyStorage:user',()=>{console.log('DELETE ASYNC_STORAGE-USER')})
     await this.getAsyncStorageData()
-    //  await AsyncStorage.removeItem('@MySuperStore:user',()=>{})
     setTimeout(() => {
       this.setState({ splash: false });
     }, 2500);
@@ -22,13 +22,20 @@ class MainApp extends React.Component {
   getAsyncStorageData = async() => {
     try {
       const value = await AsyncStorage.getItem('@MyStorage:user');
+      console.log('AsyncStorage.getItem - user:', value)
       if (value !== null) {
         this.setState({signedIn: true});
-        this.props.onLogin();
+        this.props.onLogin(JSON.parse(value));
       }
       else
         console.log('async storage no data');
      } catch (error) { console.log('error fetch async storage', error) };
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(!this.state.signedIn && prevProps.user.user !== this.props.user.user){
+      this.setState({signedIn: true});
+    }
   }
 
   render() {

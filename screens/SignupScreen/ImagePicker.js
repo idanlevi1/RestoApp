@@ -8,6 +8,7 @@ import {createAnimation, createInterpolate, createSpringAnim} from '../../compon
 import {handleSignupReq} from './SignupService'
 import { connect } from 'react-redux';
 import { signup } from '../../store/modules/user/userActions'
+import LoaderThreeDots from '../../components/LoaderThreeDots'
 
 const adorableAvatarsAPI = 'https://api.adorable.io/avatars/'
 
@@ -24,9 +25,6 @@ class ImagePicker extends React.Component {
         this.springAnim = new Animated.Value(4);
         this.colorAnim = new Animated.Value(0);
         this.colorValue = createInterpolate(this.colorAnim, [0, 300], [QED_Group.two, QED_Group.one]);
-        this.yLoading1Anim = new Animated.Value(0);
-        this.yLoading2Anim = new Animated.Value(0);
-        this.yLoading3Anim = new Animated.Value(0);
         this.playAnimations()
       }
     
@@ -45,14 +43,14 @@ class ImagePicker extends React.Component {
         ]).start()
     }
 
-    onNextClick = async() => {
+    onNextClick = () => {
         this.handleLodingView();
         const {userDetails, avatarUrl} = this.state;
         const allUserDetails = Object.assign(userDetails, {avatarUrl});
         console.log('all user details:', allUserDetails);
-        await handleSignupReq(allUserDetails, this.props.onSignup);
-        setTimeout(() => {
+        setTimeout( async() => {
             this.props.navigation.navigate("Home");
+            await handleSignupReq(allUserDetails, this.props.onSignup);
         }, 3500);
     }
 
@@ -63,20 +61,6 @@ class ImagePicker extends React.Component {
 
     handleLodingView = () => {
         this.setState({processReq:true})
-        Animated.loop(
-            Animated.sequence([
-                Animated.parallel([
-                    createAnimation(this.yLoading1Anim, -40, 500, Easing.ease, 0, false),
-                    createAnimation(this.yLoading2Anim, -40, 500, Easing.ease, 250, false),
-                    createAnimation(this.yLoading3Anim, -40, 500, Easing.ease, 500, false),
-                ]),
-                Animated.parallel([
-                    createAnimation(this.yLoading1Anim, 0, 500, Easing.ease, 0, false),
-                    createAnimation(this.yLoading2Anim, 0, 500, Easing.ease, 250, false),
-                    createAnimation(this.yLoading3Anim, 0, 500, Easing.ease, 500, false),
-                ])
-            ])
-        ).start()
     }
 
     render() {
@@ -136,20 +120,7 @@ class ImagePicker extends React.Component {
                     />
                 </View>
                 :
-                <View style={styles.loadingContainer}>
-                    <Animated.Text style={[styles.loading,{
-                        color: QED_Group.two,
-                        top: this.yLoading1Anim
-                    }]}>⬤</Animated.Text> 
-                    <Animated.Text style={[styles.loading,{
-                        color: QED_Group.three,
-                        top: this.yLoading2Anim
-                    }]}>⬤</Animated.Text>
-                    <Animated.Text style={[styles.loading,{
-                        color: QED_Group.four,
-                        top: this.yLoading3Anim
-                    }]}>⬤</Animated.Text> 
-                </View>
+                <LoaderThreeDots colors={['#364','#360','#362']} dotSize={25}/>
                 }
                 
         </Animated.View>

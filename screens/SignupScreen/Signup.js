@@ -9,6 +9,7 @@ import Level from '../../models/Level';
 import {createAnimation, createInterpolate, createSpringAnim} from '../../components/Animation';
 import Toast from 'react-native-simple-toast';
 import { validateByLength, isNumbers, validateEmail } from '../../utils/stringUtils'
+
 const NAME = 'name';
 const PHONE = 'phone';
 const EMAIL = 'email';

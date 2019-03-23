@@ -4,6 +4,7 @@ import { MonoText } from '../../components/StyledText';
 import { QED_Group } from "../../constants/Colors";
 
 class HomeView extends React.Component {
+
   render() {
     const {name,phone,email,avatarUrl} = this.props.user
     return (

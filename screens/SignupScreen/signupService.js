@@ -2,8 +2,8 @@ import { AsyncStorage } from "react-native"
 
 export const handleSignupReq = async(newUserData, signupAction) => {
     //TODO: add to DB 
+    await _storeData(newUserData)
     await signupAction(newUserData);
-    _storeData(newUserData)
 };
 
 _storeData = async(newUserData) => {
